@@ -1,0 +1,528 @@
+@charset "UTF-8";
+
+html{
+    font-size: 100%;
+}
+
+body{
+    margin: 0;
+    color: #fff;
+    background-color: black;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+
+}
+
+img{
+    width: 100%;
+
+}
+
+ul{
+    list-style: none;
+
+}
+
+a{
+    text-decoration: none;
+    color: #fff;
+}
+
+.wrapper{
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+// ヘッダー
+
+#mainvisual{
+    height: 100vh;
+    background-image: url(mainvisual.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+
+    h2{
+        margin: 0;
+        width: 150px;
+        position: absolute;
+        top: 50px;
+        left: 50px;
+
+    }
+
+    img{
+        animation:5s linear infinite rotation1;
+    }
+
+    @keyframes rotation1{
+        0%{ transform:rotate(0);}
+        100%{ transform:rotate(360deg); }
+      }
+      
+
+  
+
+        
+    h1{
+        position: absolute;
+        top: 300px;
+        left: 500px;
+        background-color: rgba(0, 0, 0, 0.644);
+        font-size: 3rem;
+        padding: 30px 50px;
+    }
+
+
+}
+
+
+
+/*========= ナビゲーションのためのCSS ===============*/
+
+/*アクティブになったエリア*/
+#g-nav.panelactive{
+    /*position:fixed;にし、z-indexの数値を大きくして前面へ*/
+    position:fixed;
+    z-index: 999;
+	top: 0;
+	width:100%;
+    height: 100vh;
+}
+
+/*丸の拡大*/
+.circle-bg{
+    position: fixed;
+	z-index:3;
+    /*丸の形*/
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #999;
+    /*丸のスタート位置と形状*/
+	transform: scale(0);/*scaleをはじめは0に*/
+	right:-50px;
+    top:-50px;
+    transition: all .6s;/*0.6秒かけてアニメーション*/
+}
+
+.circle-bg.circleactive{
+	transform: scale(50);/*クラスが付与されたらscaleを拡大*/
+}
+
+/*ナビゲーションの縦スクロール*/
+#g-nav-list{
+    display: none;/*はじめは表示なし*/
+    /*ナビの数が増えた場合縦スクロール*/
+    position: fixed;
+    z-index: 999; 
+    width: 100%;
+    height: 100vh;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+#g-nav.panelactive #g-nav-list{
+     display: block; /*クラスが付与されたら出現*/
+}
+
+/*ナビゲーション*/
+#g-nav ul {
+	opacity: 0;/*はじめは透過0*/
+    /*ナビゲーション天地中央揃え※レイアウトによって調整してください。不必要なら削除*/
+    position: absolute;
+    z-index: 999;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+}
+
+/*背景が出現後にナビゲーションを表示*/
+#g-nav.panelactive ul {
+    opacity:1;
+}
+
+/* 背景が出現後にナビゲーション li を表示※レイアウトによって調整してください。不必要なら削除*/
+#g-nav.panelactive ul li{
+animation-name:gnaviAnime;
+animation-duration:1s;
+animation-delay:.2s;/*0.2 秒遅らせて出現*/
+animation-fill-mode:forwards;
+opacity:0;
+}
+@keyframes gnaviAnime{
+0% {
+opacity: 0;
+}
+100% {
+opacity: 1;
+}
+}
+
+
+/*リストのレイアウト設定*/
+#g-nav li{
+	text-align: center; 
+	list-style: none;
+}
+
+#g-nav li a{
+	color: #333;
+	text-decoration: none;
+	padding:10px;
+	display: block;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	font-weight: bold;
+}
+
+
+
+/*========= ボタンのためのCSS ===============*/
+.openbtn{
+	position:fixed;
+	top:10px;
+	right: 10px;
+	z-index: 9999;/*ボタンを最前面に*/
+	cursor: pointer;
+    width: 70px;
+    height:70px;
+}
+	
+/*×に変化*/	
+.openbtn span{
+    display: inline-block;
+    transition: all .4s;
+    position: absolute;
+    left: 14px;
+    height: 3px;
+    border-radius: 2px;
+	background-color: rgb(255, 255, 255);
+  	width: 45%;
+  }
+
+.openbtn span:nth-of-type(1) {
+	top:15px;	
+}
+
+.openbtn span:nth-of-type(2) {
+	top:27px;
+}
+
+.openbtn span:nth-of-type(3) {
+	top:39px;
+}
+
+.openbtn.active span:nth-of-type(1) {
+    top: 18px;
+    left: 18px;
+    transform: translateY(6px) rotate(-45deg);
+    width: 30%;
+}
+
+.openbtn.active span:nth-of-type(2) {
+	opacity: 0;
+}
+
+.openbtn.active span:nth-of-type(3){
+    top: 30px;
+    left: 18px;
+    transform: translateY(-6px) rotate(45deg);
+    width: 30%;
+}
+
+
+
+
+// メイン
+
+
+/*==================================================
+スライダーのためのcss
+===================================*/
+.slider img {
+    width:100%;/*スライダー内の画像を横幅100%に*/
+    height:auto;
+}
+
+/*slickのJSで書かれるタグ内、スライド左右の余白調整*/
+
+.slider .slick-slide {
+    margin:0 10px;/*スライド左右の余白調整*/
+}
+
+#photo{
+    margin-top: 100px;
+}
+
+
+
+// メニュー
+
+#menu{
+    margin-top: 150px;
+
+    h2{
+        text-align: center;
+        font-size: 1.5rem;
+    }
+    
+    #menu-flex{
+        display: flex;
+        position: relative;
+        
+        #menu-text{
+            width: 60%;
+            background-color: rgb(212, 183, 139);
+            height: 350px;
+            box-sizing: border-box;
+            padding: 50px 30px;
+            
+            dl{
+                display: flex;
+                flex-wrap: wrap;
+                
+                
+                dt{
+                    width: 70%;
+                }
+                
+                dd{
+                    width: 30%;
+                    margin: 0;
+                }
+            }
+            
+        }
+        
+        #menu-image{
+            width: 40%;
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            border: cadetblue 3px solid;
+            
+            
+            
+        }
+        
+    }
+}
+
+
+// キャリア
+
+#career{
+
+    margin-top: 150px;
+    
+    h2{
+        text-align: center;
+        font-size: 1.5rem;
+    }
+    
+    #career-flex{
+        display: flex;
+        position: relative;
+        justify-content: space-between;
+        
+        #career-image{
+            width: 40%;
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            border: rgb(77, 89, 156) 3px solid;
+        }
+        
+        #career-text{
+            width: 60%;
+            padding: 0 30px;
+            background: rgb(222, 221, 135);
+            height: 350px;
+            box-sizing: border-box;
+            padding: 50px 30px;
+        }
+    }
+    
+}
+
+
+#access{
+    margin-top: 150px;
+    
+    h2{
+        text-align: center;
+        font-size: 1.5rem;
+    }
+    
+    #access-flex{
+        display: flex;
+        background-color: #eee;
+        color: #333;
+        
+        #access-text{
+            width: 50%;
+            padding: 0 30px;
+
+        }
+
+        #access-map{
+            width: 50%;
+            padding: 30px 30px;
+
+            iframe{
+                width: 100%;
+                height: 300px;
+
+            }
+        }
+
+
+
+    }
+    
+}
+
+footer{
+    margin-top: 100px;
+    background: #555;
+    height: 150px;
+    
+
+    #footer-flex{
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        #footer-logo{
+            width: 100px;
+            line-height: 150px;
+            margin-left: 100px;
+
+        }
+
+        ul{
+            display: flex;
+            padding-bottom: 50px;
+            margin-top: 0;
+
+            li{
+                padding-right: 50px;
+            }
+
+        }
+    }
+}
+
+
+@media screen and (max-width:800px) {
+
+    #mainvisual{
+
+        h1{
+            // position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            // background-color: rgba(0, 0, 0, 0.644);
+            // font-size: 3rem;
+            // padding: 30px 50px;
+            font-size: 1.5rem;
+
+
+        }
+    }
+
+
+    #photo{
+
+        ul{
+            padding: 0;
+        }
+    }
+
+    #menu{
+
+        #menu-flex{
+            box-sizing: border-box;
+            padding: 0 1%;
+            flex-direction: column-reverse;
+            position: static;
+            
+            #menu-text{
+                width: 100%;
+            }
+            
+            #menu-image{
+                position: static;
+                width: 100%;
+            }
+        }
+        
+    }
+    
+    
+    #career{
+        
+        #career-flex{
+            flex-direction: column;
+            position: static;
+            box-sizing: border-box;
+            padding: 0 1%;
+            
+            #career-text{
+                width: 100%;
+            }
+
+            #career-image{
+                position: static;
+                width: 100%;
+            }
+        }
+        
+    }
+    
+    
+    #access{
+        
+        #access-flex{
+            flex-direction: column;
+            box-sizing: border-box;
+            padding: 0 1%;
+            
+            #access-text{
+                width: 100%;
+            }
+
+            #access-map{
+                width: 100%;
+
+                iframe{
+                    width: 300px;
+                }
+            }
+        }
+    }
+
+
+    footer{
+
+        #footer-logo{
+            margin: 0 auto;
+        }
+
+        #footer-nav{
+            display: none;
+        }
+    }
+
+    .wrap{
+        overflow: hidden;
+    }
+    
+
+
+
+}
